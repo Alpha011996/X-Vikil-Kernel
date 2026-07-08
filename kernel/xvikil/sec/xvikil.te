@@ -1,0 +1,18 @@
+# SUBSYSTEM: XVK-SEC | Component: sepolicy_extension
+# File: kernel/xvikil/sec/xvikil.te
+# Status: Implemented
+# Phase: Security
+
+type xvk_su, domain;
+type xvk_su_exec, file_type, exec_type;
+
+# Allow init to transition to xvk_su domain
+init_daemon_domain(xvk_su)
+
+# Allow xvk_su to interact with binder and perform root actions
+allow xvk_su self:capability { sys_admin net_admin setuid setgid dac_override };
+allow xvk_su self:process { setcurrent setexec setfscreate setsockcreate };
+allow xvk_su kernel:security { compute_av compute_create };
+
+# Never allow permissive mode for this domain
+neverallow xvk_su self:process { setcurrent };
