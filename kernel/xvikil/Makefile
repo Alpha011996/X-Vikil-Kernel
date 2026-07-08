@@ -3,3 +3,4 @@ obj-y += sysfs/
 obj-y += sched/
 obj-y += thermal/
 obj-y += store/
+obj-y += gfx/
